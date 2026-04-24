@@ -63,3 +63,21 @@ exports.deleteEvent = async (req, res) => {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
+
+exports.getEventsBySearch = async (req, res) => {
+  try {
+    const { search } = req.query;
+
+    let query = {};
+
+    if (search) {
+      query.title = { $regex: search, $options: "i" }; // case-insensitive search
+    }
+
+    const events = await Event.find(query).sort({ date: 1 });
+
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching events" });
+  }
+};
