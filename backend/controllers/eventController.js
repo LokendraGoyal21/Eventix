@@ -74,7 +74,7 @@ exports.getEventsBySearch = async (req, res) => {
       query.$or = [
         {title = { $regex: search, $options: "i" }},
         {location = { $regex: search, $options: "i" }},
-        {category = {$regex : search , $options:"i"}}
+        {category = { $regex : search , $options:"i"}}
     ]}
 
     const events = await Event.find(query).sort({ date: 1 });
